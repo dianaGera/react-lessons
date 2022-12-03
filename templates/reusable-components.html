@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/hello-world.css">
+    <title>Render Multiple Elements</title>
+</head>
+<style>
+    .greeting {
+        font-size: large;
+        font-weight: 800;
+    }
+    .red {
+        color: red;
+    }
+</style>
+<body>
+    <div id="root"></div>
+    <!-- Inserting a React src -->
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+    <script type="text/babel">
+
+        // It is needed to use uppercase letter as HTML will argue that tag not found
+        const Message = (props) => <div className='greeting'>{props.msg}</div>
+        const element = (
+            <div className='red'>
+
+                <Message>Hello World</Message>
+                <Message msg='Hello World' />
+
+
+                <Message>
+                    Hello World
+                    <Message msg='Hello World' />
+                    <span>Hi there</span>
+                </Message>
+
+                //OR
+
+                {Message({msg: "Hello "})}
+                {Message({msg: "World"})}
+            </div>
+        )
+
+        ReactDOM.render([element], document.getElementById('root'))
+    </script>
+</body>
+</html>
