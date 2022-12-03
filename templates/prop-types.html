@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/hello-world.css">
+    <title>Render Multiple Elements</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+    <!-- Inserting propTypes src -->
+    <script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
+    <script type="text/babel">
+        function SayHello({firstName, lastName}) {
+            return (
+                <div>
+                    Hello {firstName} {lastName}
+                </div>
+            )
+        }
+        // !NOTE: in production PropTypes are not available
+        // And if you wanna take things a step further, then you
+        // may need to get a babel plugin called
+        // <babel-plugin-transform-react-remove-prop-types>
+
+
+        // This will work without PropTypes function bellow,
+        // since we imported prop-types@ module
+        // The only difference is that if only one parament will be passed,
+        // then it will through an error only for this parameter is it was not
+        // valid. Without mentioning that function requires 2 params
+        // To fix it add .isRequired
+        SayHello.propTypes = {
+            firstName: PropTypes.string.isRequired,
+            lastName: PropTypes.string.isRequired
+        }
+
+        // Custom propTypes validation
+        // create a propTypes object to validate input
+        const PropTypes = {
+            string(props, propName, componentName) {
+                if (typeof props[propName] !== "string") {
+                    return new Error(
+                        `${propName} is not valid for componentName ${componentName}
+                        first name require string but ${typeof props[propName]} were passed`
+                    )
+                }
+            }
+        }
+
+        const element = <SayHello firstName={false} />
+        ReactDOM.render([element], document.getElementById('root'))
+    </script>
+</body>
+</html>
