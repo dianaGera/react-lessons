@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/hello-world.css">
+    <title>JSX Hello World</title>
+</head>
+<style>
+    .greeting {
+        font-size: large;
+        font-weight: 800;
+    }
+    .red {
+        color: red;
+    }
+</style>
+<body>
+    <div id="root"></div>
+    <!-- Inserting a React src -->
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <!-- Inserting a Babel src to handle JSX.
+        It will compile any script tag which contains text/babel-->
+    <!-- NOTE: in a real project you will not gonna use Babel  -->
+    <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+    <script type="text/babel">
+        const rootElement = document.getElementById('root')
+
+        // In a header you cab see a new script tag with contains a
+        // compile version of the following code
+        const element = <div className='greeting'>Hello World</div>
+
+
+        // Inserting a variables as a children
+        const text = ['Random ', 'red ', 'text ']
+        const red = 'red'
+        const element2 = <div className={red}>
+            <span>{text[0]}</span>
+            <strong>{text[1]}</strong>
+            <span>{text[2]}</span>
+        </div>
+
+
+        // Another way to create element
+        const element3 = <div className='greeting' children='Hello World' />
+
+
+        // One more way to create element
+        const childrenTxt = "Hello World"
+        const myClassName = "red"
+        const props = {childrenTxt, myClassName}
+        const element4 = <div {...props} />
+
+
+        ReactDOM.render([element, element2, element3, element4], rootElement)
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/hello-world.css">
+    <title>Hello World</title>
+</head>
+<style>
+    .greeting {
+        font-size: large;
+        font-weight: 800;
+    }
+    .red {
+        color: red;
+    }
+</style>
+<body>
+    <div id="root"></div>
+    <!-- Inserting a React src -->
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+        <script type="text/javascript">
+            const rootElement = document.getElementById('root')
+
+            // Creating a simple React elements
+            const element = React.createElement('div', {
+                children: "Hello World",
+                className: "greeting",
+            })
+
+            // OR
+            //const element = React.createElement('div', {
+            //    className: "container",
+            //}, "Hello World", "I am a second children in array")
+
+            // OR
+            // ... children: ["Hello World", "I am a second children in array"]
+
+
+            // Creating a nested React elements
+            const element2 = React.createElement('div', {
+                children: React.createElement('span', {
+                    children: "Random red text",
+                    className: "red",
+                }),
+                className: "greeting",
+            })
+            ReactDOM.render([element, element2], rootElement)
+            
+            // // Print Hello World without using React
+            //const element = document.createElement('div')
+            //element.textContent = 'Hello World'
+            //element.className = 'container'
+            //rootElement.appendChild(element)
+        </script>
+</body>
+</html>
+
+

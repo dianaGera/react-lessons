@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/hello-world.css">
+    <title>Render Multiple Elements</title>
+</head>
+<style>
+    .greeting {
+        font-size: large;
+        font-weight: 800;
+    }
+    .red {
+        color: red;
+    }
+</style>
+<body>
+    <div id="root"></div>
+    <!-- Inserting a React src -->
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+        <script type="text/babel">
+
+            const jsxElement = (
+                <React.Fragment>
+                    <div><span>Hello</span> <span>World</span></div>
+                </React.Fragment>
+            )
+            
+            // OR equivalent of this will be
+            const jsxElement2 = (
+                <>
+                    <div><span>Hello</span> <span>World</span></div>
+                </>
+            )
+
+
+            // Without JSX
+            const rootElement = document.getElementById('root')
+            const helloElement = React.createElement('span', null, "Hello")
+            const worldElement = React.createElement('span', null, "World")
+
+            const combinedElement = React.createElement(
+                React.Fragment, null,
+                helloElement, " ", worldElement
+            )
+
+            ReactDOM.render([combinedElement, jsxElement, jsxElement2], document.getElementById('root'))
+        </script>
+</body>
+</html>
