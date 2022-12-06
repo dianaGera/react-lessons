@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/hello-world.css">
+    <title>Render Multiple Elements</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+    <style>
+    </style>
+
+    <script type="text/babel">
+        const state = {eventCount: 0, username: ""}
+        function handOnClick() {
+            setState({eventCount: state.eventCount + 1})
+        }
+
+        function handUserInput() {
+            setState({username: event.target.value})
+        }
+
+        function App() {
+            return (
+                <div>
+                    <h1>There have been {state.eventCount} events</h1>
+                    <p>
+                        <button
+                            onClick={handOnClick}
+                        >Click</button>
+                    </p>
+                    <p>You typed: {state.username}</p>
+                    <p>
+                        <input onChange={handUserInput} type="text" />
+                    </p>
+                </div>
+            )   // onBlur={foo} will trigger event on click to other area
+        }
+
+        // This event is simplified fot tuition purpose
+        function setState(newState) {
+            Object.assign(state, newState)
+            renderApp()
+        }
+
+        function renderApp() {
+            ReactDOM.render(<App />, document.getElementById('root'))
+        }
+        renderApp()
+    </script>
+</body>
+</html>
