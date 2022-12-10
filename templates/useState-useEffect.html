@@ -40,10 +40,18 @@
         // It will provide such needs as accessing the data even after reload
 
         function Getting() {
-            // States are managed independently
-            const [name, setName] = React.useState(
-                window.localStorage.getItem('name') || ""
-            )
+            // NOTICE: get item from local storage will render each time when smth changes
+            // To prevent this React State has a lazy loading initialization feature
+            // you can provide a function as an initial value and that func will be called
+            // to retrieve initial value and will be called only when it necessary needed
+
+            //const [name, setName] = React.useState(
+            //    window.localStorage.getItem('name') || ""
+            //)
+            const [name, setName] = React.useState(() => {
+                return window.localStorage.getItem('name') || ""
+            })
+
             React.useEffect(() => {
                 window.localStorage.setItem('name', name)
             })
