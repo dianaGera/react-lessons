@@ -23,13 +23,36 @@
             // Notice here we cant change the name using:
             // const handleChange = event => name = event.target.value
             // BC that wil trigger the rerender and will be garbage collected
-            // Instead it is used the React hook below 
+            // Instead it is used the React hook below
             const handleChange = event => setName(event.target.value)
             return (
                 <div>
                     <form>
                         <label htmlFor="name">Name:</label>
                         <input id="name" onChange={handleChange} />
+                    </form>
+                    {name ? <strong>Hello {name}</strong> : "Please enter you name" }
+                </div>
+            )
+        }
+
+        // Use the useEffect to put the value to a local storage
+        // It will provide such needs as accessing the data even after reload
+
+        function Getting() {
+            // States are managed independently
+            const [name, setName] = React.useState(
+                window.localStorage.getItem('name') || ""
+            )
+            React.useEffect(() => {
+                window.localStorage.setItem('name', name)
+            })
+            const handleChange = event => setName(event.target.value)
+            return (
+                <div>
+                    <form>
+                        <label htmlFor="name">Name:</label>
+                        <input id="name" onChange={handleChange} value={name}/>
                     </form>
                     {name ? <strong>Hello {name}</strong> : "Please enter you name" }
                 </div>
