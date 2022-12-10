@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/hello-world.css">
+    <title>Render Multiple Elements</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+    <style>
+    </style>
+
+    <script type="text/babel">
+        function Getting() {
+            // States are managed independently
+            const [name, setName] = React.useState("")
+
+            // Notice here we cant change the name using:
+            // const handleChange = event => name = event.target.value
+            // BC that wil trigger the rerender and will be garbage collected
+            // Instead it is used the React hook below 
+            const handleChange = event => setName(event.target.value)
+            return (
+                <div>
+                    <form>
+                        <label htmlFor="name">Name:</label>
+                        <input id="name" onChange={handleChange} />
+                    </form>
+                    {name ? <strong>Hello {name}</strong> : "Please enter you name" }
+                </div>
+            )
+        }
+
+        ReactDOM.render(<Getting/>, document.getElementById('root'))
+    </script>
+</body>
+</html>
