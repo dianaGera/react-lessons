@@ -48,9 +48,13 @@
             //const [name, setName] = React.useState(
             //    window.localStorage.getItem('name') || ""
             //)
+
+            // Also notice: dont forget to add the dependency array.
+            // Otherwise it will be rerendered each time if smth
+            // happens in other components
             const [name, setName] = React.useState(() => {
                 return window.localStorage.getItem('name') || ""
-            })
+            }, [name])
 
             React.useEffect(() => {
                 window.localStorage.setItem('name', name)
@@ -67,6 +71,8 @@
             )
         }
 
+        // lector recommends to use this plugin while using React hooks
+        // eslint-plugin-react-hooks
         ReactDOM.render(<Getting/>, document.getElementById('root'))
     </script>
 </body>
