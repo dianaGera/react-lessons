@@ -43,31 +43,64 @@
     <script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
 
     <script type="text/babel">
-      function Tilt({children}) {
-        const tiltRef = React.useRef()
 
-        React.useEffect(() => {
-          const tiltNode = tiltRef.current
-          const vanillaTiltOptions = {
-            max: 25,
-            speed: 400,
-            glare: true,
-            'max-glare': 0.8,
-          }
-          VanillaTilt.init(tiltNode, vanillaTiltOptions)
-          return () => {
-            tiltNode.vanillaTilt.destroy()
-          }
+      function Tilt({children}) {
+        // vanilla-tilt take a DOM node and adds some effects on mouse hover
+        // Since following lines are React element (which is not a DOM node)
+        // And then React takes this element and renders it to the DOM
+
+        // So we need React to give as the DOM node that is creates for that
+        // element where we want to have a vanilla-tilt effect
+
+        // To doing this is used ref, which is an object that has
+        // immutable current property, which is current val of the property
+
+        const tiltRef = React.useRef()  // <useRef> takes an DOM node as argument
+
+        console.log(tiltRef.current)  // --> undefined
+        // And the reason of it is bc at this time React didn't created the DOM node
+        // So we need create a func that runs after React is updates the DOM to get the node
+        // And interacting with the DOM is a side effect, so for this we can use
+        // <useEffect> hook
+
+            React.useEffect(() => {
+                const tiltNode = tiltRef.current
+                const vanillaTiltOptions = {
+                    max: 25,
+                    speed: 400,
+                    glare: true,
+                    'max-glare': 0.8,
+                }
+
+
+            VanillaTilt.init(tiltNode, vanillaTiltOptions)
+
+            // NOTE: Even if you hide the vanilla-tilt root, removing the DOM node
+            // from the page, there sill will be a lot of event handlers on that
+            // DOM node and references to vanillaTilt library, that means that
+            // the DOM node itself may not exist on the page but it does still
+            // exist in the memory, which can lead to a memory leak
+
+            // To handel this problem, we need to call a func each time of tilt update
+            // and destroy all references over the DOM node vanilla tilt and all events
+
+
+            return () => {
+                tiltNode.VanillaTilt.destroy()
+            }
+        // NOTE: useEffect is gonna be called on every rerender of a tilt component
+        // adding the dependency array[] will point: init tilt component if it is
+        // mounted on a page, otherwise destroy
+        // empty bc none of the variables in our useEffect callback can change
         }, [])
 
         return (
-        // vanilla-tilt take a DOM node and adds some effects on mouse hover
-        // Since following lines are React element (which is not a DOM node)
           <div ref={tiltRef} className="tilt-root">
             <div>{children}</div>
           </div>
         )
       }
+      
 
       function App() {
         const [showTilt, setShowTilt] = React.useState(true)
